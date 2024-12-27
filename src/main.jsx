@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createHashRouter } from 'react-router-dom';
 
 // Pages and Components
 import App from './App.jsx';
@@ -15,7 +15,7 @@ import Post from './pages/Post';
 import AllPosts from './pages/AllPosts';
 
 // Define Routes with Router
-const router = createBrowserRouter([
+const router = createHashRouter([ // Changed to createHashRouter
   {
     path: "/",
     element: <App />,
