@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Logo({ width = '90px', className = '', logoSrc = '../DALL·E 2024-12-24 12.43.45 - A modern, sleek logo for a tech company. The design should be minimalistic and professional, featuring abstract geometric shapes, clean lines, and a f.webp' }) {
+function Logo({ width = '90px', className = '', logoSrc = '../modern.webp' }) {
   return (
     <div
       style={{ width }}
