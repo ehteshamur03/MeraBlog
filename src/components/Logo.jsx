@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Logo({ width = '90px', className = '', logoSrc = '../modern.webp' }) {
+function Logo({ width = '90px', className = '', logoSrc = '/modern.webp' }) {  // Updated path
   return (
     <div
       style={{ width }}
