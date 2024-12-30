@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.css'; // Include global styles
 import { Provider } from 'react-redux';
 import store from './store/store.js';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
@@ -15,15 +15,12 @@ import Post from './pages/Post';
 import AllPosts from './pages/AllPosts';
 
 // Define Routes with Router
-const router = createHashRouter([ // Changed to createHashRouter
+const router = createHashRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
+      { path: "/", element: <Home /> },
       {
         path: "/login",
         element: (
@@ -72,11 +69,13 @@ const router = createHashRouter([ // Changed to createHashRouter
   },
 ]);
 
-// Render the application with Redux and Router
+// Render the application
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-start">
+        <RouterProvider router={router} />
+      </div>
     </Provider>
   </React.StrictMode>
 );

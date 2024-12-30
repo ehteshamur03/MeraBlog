@@ -44,17 +44,18 @@ function Footer() {
   return (
     <footer className="relative overflow-hidden py-8 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-white">
       <div className="relative z-10 mx-auto max-w-7xl px-6">
-        <div className="flex flex-wrap -m-4"> {/* Adjusted margin */}
+        {/* Top Section */}
+        <div className="flex flex-wrap -m-4 justify-center md:justify-start">
           {/* Logo and About Section */}
           <div className="w-full p-4 md:w-1/2 lg:w-4/12">
-            <div className="flex flex-col justify-between h-full">
-              <div className="mb-4"> {/* Reduced margin */}
+            <div className="flex flex-col justify-between h-full text-center md:text-left">
+              <div className="mb-4">
                 <Logo width="120px" />
               </div>
               <p className="text-sm text-gray-400">
                 DevUI is dedicated to creating intuitive and powerful designs for everyone. Join us on our journey!
               </p>
-              <div className="mt-4 flex space-x-3"> {/* Reduced space */}
+              <div className="mt-4 flex justify-center space-x-3 md:justify-start">
                 {socialLinks.map((link, index) => (
                   <a
                     key={index}
@@ -72,14 +73,14 @@ function Footer() {
 
           {/* Sections */}
           {sections.map((section, index) => (
-            <div key={index} className="w-full p-4 md:w-1/2 lg:w-2/12">
+            <div key={index} className="w-full p-4 sm:w-1/2 lg:w-2/12">
               <div className="h-full">
-                <h3 className="mb-4 text-lg font-semibold uppercase text-gray-300"> {/* Reduced margin */}
+                <h3 className="mb-4 text-lg font-semibold uppercase text-gray-300">
                   {section.title}
                 </h3>
-                <ul>
+                <ul className="space-y-2">
                   {section.links.map((link, i) => (
-                    <li key={i} className="mb-3"> {/* Reduced margin */}
+                    <li key={i}>
                       <Link
                         to={link.to}
                         className="text-base font-medium transition hover:text-blue-400"
@@ -95,7 +96,7 @@ function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-8 text-center text-sm text-gray-500"> {/* Reduced margin */}
+        <div className="mt-8 text-center text-sm text-gray-500">
           &copy; {new Date().getFullYear()} DevUI. All Rights Reserved.
         </div>
       </div>
