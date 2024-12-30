@@ -20,6 +20,7 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
             apiKey="kzysrma0k0q0e07zs3leab0ufufratduhvj7wq56w4cawq92"
             init={{
               initialValue: defaultValue,
+              readonly: false,
               height: 500,
               menubar: true,
               plugins: [
