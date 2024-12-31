@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
-
-function Logo({ width = '90px', className = '', logoSrc = "../assets/modern.jpg" }) {  // Updated path
+import logo from './modern.jpg';
+function Logo({ width = '90px', className = '', logoSrc = logo }) {
+  // Component logic
   return (
     <div
       style={{ width }}
