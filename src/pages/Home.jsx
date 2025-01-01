@@ -1,18 +1,36 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import appwriteService from "../appwrite/config";
-import {Container, PostCard} from '../components'
+import { Container, PostCard } from '../components'
 
 function Home() {
     const [posts, setPosts] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         appwriteService.getPosts().then((posts) => {
             if (posts) {
                 setPosts(posts.documents)
             }
+            setIsLoading(false);
         })
     }, [])
-  
+
+    if (isLoading) {
+        return (
+            <div className="w-full py-8 mt-4 text-center">
+                <Container>
+                    <div className="flex justify-center items-center h-64">
+                        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10"></div>
+                        <p className="ml-4 text-lg font-semibold text-gray-600">
+                            Loading posts...
+                        </p>
+                    </div>
+                </Container>
+            </div>
+        );
+    }
+
+
     if (posts.length === 0) {
         return (
             <div className="w-full py-8 mt-4 text-center">
