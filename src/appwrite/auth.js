@@ -1,5 +1,5 @@
 import conf from '../conf/conf.js';
-import { Client, Account, ID } from "appwrite";
+import { Client, Account, ID, OAuthProvider } from "appwrite";
 
 export class AuthService {
     client = new Client();
@@ -87,7 +87,7 @@ export class AuthService {
         try {
             // Generate the OAuth URL for GitHub login with correct URLs
             const url = await this.account.createOAuth2Session(
-                'github',
+                OAuthProvider.Github,
                 'https://ehteshamur03.github.io/MeraBlog/#/',
                 'https://ehteshamur03.github.io/MeraBlog/#/login');
 
