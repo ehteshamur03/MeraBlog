@@ -81,6 +81,27 @@ export class AuthService {
             console.error("Appwrite service :: logoutOnClose :: error", error);
         }
     }
+
+    // Add GitHub OAuth login
+    async loginWithGitHub() {
+        try {
+            // Generate the OAuth URL for GitHub login with correct URLs
+            const url = await this.account.createOAuth2Session(
+                'github',
+                'https://ehteshamur03.github.io/MeraBlog/#/',
+                'https://ehteshamur03.github.io/MeraBlog/#/login');
+
+            if (url) {
+                console.log("GitHub OAuth URL:", url);
+                window.location.href = url;  // Redirect to GitHub login page
+            } else {
+                throw new Error("Failed to generate GitHub OAuth URL.");
+            }
+        } catch (error) {
+            console.error("GitHub OAuth Error:", error);
+            // throw error;
+        }
+    }
 }
 
 const authService = new AuthService();
