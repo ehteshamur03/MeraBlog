@@ -10,16 +10,19 @@ export class AuthService {
             .setEndpoint(conf.appwriteUrl)
             .setProject(conf.appwriteProjectId);
         this.account = new Account(this.client);
+
+        // Attach event listener to logout on browser/tab close
+        window.addEventListener("beforeunload", () => this.logoutOnClose());
     }
 
     async createAccount({ email, password, name }) {
         try {
             console.log("Attempting to create account with:", { email, name });
-    
+
             // Create the account with a unique ID
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             console.log("Account created successfully:", userAccount);
-    
+
             // Now login with the created email and password
             const session = await this.login({ email, password });
             if (session) {
@@ -31,7 +34,6 @@ export class AuthService {
         }
         return null;
     }
-    
 
     async login({ email, password }) {
         try {
@@ -47,7 +49,6 @@ export class AuthService {
         }
         return null;
     }
-    
 
     async getCurrentUser() {
         try {
@@ -64,10 +65,20 @@ export class AuthService {
     async logout() {
         try {
             console.log("Attempting to log out...");
-            await this.account.deleteSessions();
+            await this.account.deleteSessions(); // Deletes all sessions
             console.log("Logout successful.");
         } catch (error) {
             console.error("Appwrite service :: logout :: error", error);
+        }
+    }
+
+    async logoutOnClose() {
+        try {
+            console.log("Attempting to log out on browser/tab close...");
+            await this.account.deleteSession("current"); // Deletes only the current session
+            console.log("Logout on close successful.");
+        } catch (error) {
+            console.error("Appwrite service :: logoutOnClose :: error", error);
         }
     }
 }
