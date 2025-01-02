@@ -102,7 +102,29 @@ export class AuthService {
             // throw error;
         }
     }
+
+    async loginWithGoogle() {
+        try {
+            // Generate the OAuth URL for GitHub login with correct URLs
+            const url = await this.account.createOAuth2Session(
+                OAuthProvider.Google,
+                'https://ehteshamur03.github.io/MeraBlog/#/',
+                'https://ehteshamur03.github.io/MeraBlog/#/login');
+
+            if (url) {
+                console.log("Google OAuth URL:", url);
+                window.location.href = url;  // Redirect to GitHub login page
+            } else {
+                throw new Error("Failed to generate Google OAuth URL.");
+            }
+        } catch (error) {
+            console.error("Google OAuth Error:", error);
+            // throw error;
+        }
+    }
+
 }
+
 
 const authService = new AuthService();
 

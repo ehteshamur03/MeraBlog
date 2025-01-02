@@ -42,6 +42,15 @@ function Login() {
             setError("Failed to initiate GitHub login. Please try again.");
         }
     };
+    const loginWithGoogle = async () => {
+        setError("");
+        try {
+            await authService.loginWithGoogle(); // Simply call the method defined in authService
+        } catch (err) {
+            console.error("GitHub OAuth Login Error:", err);
+            setError("Failed to initiate GitHub login. Please try again.");
+        }
+    };
 
     return (
         <div className="flex items-center justify-center w-full">
@@ -105,6 +114,16 @@ function Login() {
                         onClick={loginWithGitHub}
                     >
                         Sign in with GitHub
+                    </Button>
+                </div>
+                <div className="mt-6 flex justify-center">
+                    <Button
+                        type="button"
+                        className="w-full bg-rose-700 text-white"
+                        aria-label="Sign in with GitHub"
+                        onClick={loginWithGoogle}
+                    >
+                        Sign in with Google
                     </Button>
                 </div>
             </div>
