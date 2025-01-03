@@ -20,9 +20,9 @@ function Home() {
             <div className="w-full py-8 mt-4 text-center">
                 <Container>
                     <div className="flex justify-center items-center h-64">
-                        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10"></div>
+                    <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
                         <p className="ml-4 text-lg font-semibold text-gray-600">
-                            Loading posts...
+                            Login to read posts :)
                         </p>
                     </div>
                 </Container>

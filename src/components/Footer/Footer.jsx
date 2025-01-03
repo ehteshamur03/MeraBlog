@@ -6,10 +6,10 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/f
 
 function Footer() {
   const socialLinks = [
-    { icon: <FaFacebookF size={20} />, href: "/", hoverColor: "hover:text-blue-400" },
-    { icon: <FaTwitter size={20} />, href: "/", hoverColor: "hover:text-blue-300" },
+    { icon: <FaFacebookF size={20} />, href: "/", hoverColor: "hover:text-blue-600" },
+    { icon: <FaTwitter size={20} />, href: "/", hoverColor: "hover:text-blue-400" },
     { icon: <FaInstagram size={20} />, href: "/", hoverColor: "hover:text-pink-500" },
-    { icon: <FaLinkedinIn size={20} />, href: "https://www.linkedin.com/in/md-ehteshamur-rahman-45a493263/", hoverColor: "hover:text-blue-500" },
+    { icon: <FaLinkedinIn size={20} />, href: "https://www.linkedin.com/in/md-ehteshamur-rahman-45a493263/", hoverColor: "hover:text-blue-700" },
   ];
 
   const sections = [
@@ -42,25 +42,24 @@ function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden py-8 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-white">
-      <div className="relative z-10 mx-auto max-w-7xl px-6">
-        {/* Top Section */}
-        <div className="flex flex-wrap -m-4 justify-center md:justify-start">
+    <footer className="py-4 bg-[#1f1f1f] text-gray-200">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex flex-wrap -m-2 justify-between">
           {/* Logo and About Section */}
-          <div className="w-full p-4 md:w-1/2 lg:w-4/12">
-            <div className="flex flex-col justify-between h-full text-center md:text-left">
-              <div className="mb-4">
+          <div className="w-full sm:w-1/4 p-2">
+            <div className="flex flex-col justify-between h-full text-center sm:text-left">
+              <div className="mb-2">
                 <Logo width="120px" />
               </div>
-              <p className="text-sm text-gray-400">
-                DevUI is dedicated to creating intuitive and powerful designs for everyone. Join us on our journey!
+              <p className="text-xs text-gray-400 mb-2">
+                Creating intuitive and powerful designs. Join our journey!
               </p>
-              <div className="mt-4 flex justify-center space-x-3 md:justify-start">
+              <div className="mt-2 flex justify-center space-x-3 sm:justify-start">
                 {socialLinks.map((link, index) => (
                   <a
                     key={index}
                     href={link.href}
-                    className={`${link.hoverColor} transition`}
+                    className={`${link.hoverColor} transition-colors duration-200`}
                     target={link.href.startsWith("http") ? "_blank" : "_self"}
                     rel="noopener noreferrer"
                   >
@@ -73,17 +72,17 @@ function Footer() {
 
           {/* Sections */}
           {sections.map((section, index) => (
-            <div key={index} className="w-full p-4 sm:w-1/2 lg:w-2/12">
-              <div className="h-full">
-                <h3 className="mb-4 text-lg font-semibold uppercase text-gray-300">
+            <div key={index} className="w-full sm:w-1/4 p-2">
+              <div>
+                <h3 className="mb-2 text-m font-semibold text-gray-300">
                   {section.title}
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-1">
                   {section.links.map((link, i) => (
                     <li key={i}>
                       <Link
                         to={link.to}
-                        className="text-base font-medium transition hover:text-blue-400"
+                        className="text-sm font-medium text-gray-400 hover:text-[#F57C5F]"
                       >
                         {link.name}
                       </Link>
@@ -96,7 +95,7 @@ function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-8 text-center text-sm text-gray-500">
+        <div className="mt-4 text-center text-xs text-gray-500">
           &copy; {new Date().getFullYear()} DevUI. All Rights Reserved.
         </div>
       </div>

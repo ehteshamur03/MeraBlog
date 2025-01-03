@@ -13,7 +13,6 @@ function Login() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // Email/password login function
     const login = async (data) => {
         setError("");
         setLoading(true);
@@ -32,98 +31,87 @@ function Login() {
         }
     };
 
-    // GitHub OAuth login function
     const loginWithGitHub = async () => {
         setError("");
         try {
-            await authService.loginWithGitHub(); // Simply call the method defined in authService
-        } catch (err) {
-            console.error("GitHub OAuth Login Error:", err);
-            setError("Failed to initiate GitHub login. Please try again.");
-        }
-    };
-    const loginWithGoogle = async () => {
-        setError("");
-        try {
-            await authService.loginWithGoogle(); // Simply call the method defined in authService
+            await authService.loginWithGitHub();
         } catch (err) {
             console.error("GitHub OAuth Login Error:", err);
             setError("Failed to initiate GitHub login. Please try again.");
         }
     };
 
+    const loginWithGoogle = async () => {
+        setError("");
+        try {
+            await authService.loginWithGoogle();
+        } catch (err) {
+            console.error("Google OAuth Login Error:", err);
+            setError("Failed to initiate Google login. Please try again.");
+        }
+    };
+
     return (
-        <div className="flex items-center justify-center w-full">
-            <div
-                className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
-            >
-                <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[100px]">
-                        <Logo width="100%" />
-                    </span>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 relative overflow-hidden">
+            <div className="absolute inset-0 bg-cover bg-center opacity-25" style={{ backgroundImage: 'url(/path-to-your-background-image.jpg)' }} />
+            <div className="relative bg-white/30 backdrop-blur-md shadow-xl rounded-3xl p-8 max-w-lg w-full border border-white/20 m-4">
+                <div className="text-center">
+                    <Logo width="80px" className="mx-auto mb-4" />
+                    <h2 className="text-3xl font-extrabold text-white">Welcome Back</h2>
+                    <p className="mt-2 text-lg text-gray-200">
+                        Don&apos;t have an account?&nbsp;
+                        <Link to="/signup" className="font-medium text-gray-800 hover:underline">
+                            Sign Up
+                        </Link>
+                    </p>
                 </div>
-                <h2 className="text-center text-2xl font-bold leading-tight">
-                    Sign in to your account
-                </h2>
-                <p className="mt-2 text-center text-base text-black/60">
-                    Don&apos;t have an account?&nbsp;
-                    <Link
-                        to="/signup"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
-                    >
-                        Sign Up
-                    </Link>
-                </p>
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                <form onSubmit={handleSubmit(login)} className="mt-8">
-                    <div className="space-y-5">
+                {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+                <form onSubmit={handleSubmit(login)} className="mt-6 space-y-4">
+                    <div>
                         <Input
                             label="Email:"
-                            placeholder="Enter your email"
                             type="email"
-                            aria-label="Email"
-                            {...register("email", {
-                                required: "Email is required",
-                                validate: {
-                                    matchPattern: (value) =>
-                                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-                                            value
-                                        ) || "Email address must be valid",
-                                },
-                            })}
+                            placeholder="Enter your email"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/70"
+                            {...register("email", { required: "Email is required" })}
                         />
+                    </div>
+                    <div>
                         <Input
                             label="Password:"
                             type="password"
                             placeholder="Enter your password"
-                            aria-label="Password"
-                            {...register("password", {
-                                required: "Password is required",
-                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/70"
+                            {...register("password", { required: "Password is required" })}
                         />
-                        <Button type="submit" className="w-full" disabled={loading}>
-                            {loading ? "Signing in..." : "Sign in"}
-                        </Button>
                     </div>
+                    <Button
+                        type="submit"
+                        className={`w-full py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition-all ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                        disabled={loading}
+                    >
+                        {loading ? "Signing in..." : "Sign in"}
+                    </Button>
                 </form>
-                <div className="mt-6 flex justify-center">
+                <div className="mt-4">
+                    <div className="flex items-center justify-center space-x-2">
+                        <div className="h-px bg-white/50 w-1/4" />
+                        <span className="text-white mx-2">OR</span>
+                        <div className="h-px bg-white/50 w-1/4" />
+                    </div>
                     <Button
                         type="button"
-                        className="w-full bg-gray-800 text-white"
-                        aria-label="Sign in with GitHub"
+                        className="mt-4 flex items-center justify-center w-full py-3 bg-gray-800 text-white font-bold rounded-lg hover:bg-gray-900 transition-all"
                         onClick={loginWithGitHub}
                     >
-                        Sign in with GitHub
+                        <i className="fab fa-github mr-2"></i> Sign in with GitHub
                     </Button>
-                </div>
-                <div className="mt-6 flex justify-center">
                     <Button
                         type="button"
-                        className="w-full bg-rose-700 text-white"
-                        aria-label="Sign in with GitHub"
+                        className="mt-4 flex items-center justify-center w-full py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-all"
                         onClick={loginWithGoogle}
                     >
-                        Sign in with Google
+                        <i className="fab fa-google mr-2"></i> Sign in with Google
                     </Button>
                 </div>
             </div>

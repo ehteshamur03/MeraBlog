@@ -5,34 +5,37 @@ import { useState } from 'react';
 
 function LogoutBtn() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false); // State to manage loading
-  const [error, setError] = useState(null); // State to handle errors
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Logout handler function
   const logoutHandler = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      await authService.logout(); // Call logout from auth service
-      dispatch(logout()); // Dispatch the logout action
+      await authService.logout();
+      dispatch(logout());
     } catch {
-      setError('Failed to log out. Please try again.'); // Handle errors
+      setError('Failed to log out. Please try again.');
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
   return (
-    <div className="inline-block">
+    <div className="inline-block relative">
       <button
-        className="px-6 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-600 duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 transition duration-300 transform active:scale-95 disabled:bg-blue-400 disabled:cursor-not-allowed disabled:opacity-50"
         onClick={logoutHandler}
-        disabled={loading} // Disable button when loading
+        disabled={loading}
       >
-        {loading ? 'Logging out...' : 'Logout'} {/* Show loading text */}
+        {loading ? (
+          <span className="animate-pulse">Logging out...</span>
+        ) : (
+          'Logout'
+        )}
       </button>
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>} {/* Display error message */}
+      {error && <p className="mt-2 text-sm text-red-600 transition-all opacity-100">{error}</p>}
     </div>
   );
 }

@@ -73,7 +73,7 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-start">
+      <div className="bg-gray-50 flex flex-col">
         <RouterProvider router={router} />
       </div>
     </Provider>

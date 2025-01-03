@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function PostForm({ post, onDelete }) {
-    const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
+    const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm({
         defaultValues: {
             title: post?.title || "",
             slug: post?.$id || "",
@@ -20,35 +20,29 @@ export default function PostForm({ post, onDelete }) {
     const userData = useSelector((state) => state.auth.userData);
 
     const submit = async (data) => {
-        if (post) {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
-
-            if (file) {
-                appwriteService.deleteFile(post.featuredImage);
+        try {
+            let file;
+            if (data.image[0]) {
+                file = await appwriteService.uploadFile(data.image[0]);
             }
 
-            const dbPost = await appwriteService.updatePost(post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : undefined,
-            });
-
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
-            }
-        } else {
-            const file = await appwriteService.uploadFile(data.image[0]);
-
-            if (file) {
-                const fileId = file.$id;
-                data.featuredImage = fileId;
-                data.user_Id = userData.$id;
-
-                const dbPost = await appwriteService.createPost(data);
-
-                if (dbPost) {
-                    navigate(`/post/${dbPost.$id}`);
+            if (post) {
+                if (file) appwriteService.deleteFile(post.featuredImage);
+                const dbPost = await appwriteService.updatePost(post.$id, {
+                    ...data,
+                    featuredImage: file ? file.$id : undefined,
+                });
+                if (dbPost) navigate(`/post/${dbPost.$id}`);
+            } else {
+                if (file) {
+                    data.featuredImage = file.$id;
+                    data.user_Id = userData.$id;
                 }
+                const dbPost = await appwriteService.createPost(data);
+                if (dbPost) navigate(`/post/${dbPost.$id}`);
             }
+        } catch (error) {
+            console.error("Error while submitting the form:", error);
         }
     };
 
@@ -59,7 +53,6 @@ export default function PostForm({ post, onDelete }) {
                 .toLowerCase()
                 .replace(/[^a-zA-Z\d\s]+/g, "-")
                 .replace(/\s/g, "-");
-
         return "";
     }, []);
 
@@ -75,8 +68,12 @@ export default function PostForm({ post, onDelete }) {
 
     const handleDelete = async () => {
         if (window.confirm("Are you sure you want to delete this post?")) {
-            await appwriteService.deletePost(post.$id);
-            onDelete();
+            try {
+                await appwriteService.deletePost(post.$id);
+                onDelete();
+            } catch (error) {
+                console.error("Error deleting post:", error);
+            }
         }
     };
 
@@ -89,19 +86,21 @@ export default function PostForm({ post, onDelete }) {
                         label="Title :"
                         placeholder="Enter the title"
                         className="mb-4 border border-gray-300 p-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        {...register("title", { required: true })}
+                        {...register("title", { required: "Title is required" })}
                     />
+                    {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
                 </div>
                 <div>
                     <Input
                         label="Slug :"
                         placeholder="Enter the slug"
                         className="mb-4 border border-gray-300 p-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        {...register("slug", { required: true })}
+                        {...register("slug", { required: "Slug is required" })}
                         onInput={(e) => {
                             setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                         }}
                     />
+                    {errors.slug && <p className="text-red-500 text-sm">{errors.slug.message}</p>}
                 </div>
                 <div>
                     <RTE
@@ -122,8 +121,10 @@ export default function PostForm({ post, onDelete }) {
                         type="file"
                         className="border border-gray-300 p-6 rounded-lg w-full cursor-pointer bg-gray-100 focus:outline-none"
                         accept="image/png, image/jpg, image/jpeg, image/gif"
-                        {...register("image", { required: !post })}
+                        {...register("image", { required: !post && "Featured image is required" })}
                     />
+                    {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
+
                     {post && post.featuredImage && (
                         <div className="mt-4">
                             <img
