@@ -3,18 +3,21 @@ import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
+import { isMobile } from "react-device-detect";
 
-export default function RTE({ name, control, label, defaultValue = "", height = 500 }) {
+export default function RTE({ name, control, label, defaultValue = "" }) {
+  const dynamicHeight = isMobile ? 300 : 500; // Adjust height based on device
+
   const editorConfig = {
     initialValue: defaultValue,
     icons: "thin",
     readonly: false,
-    height,
-    menubar: true,
+    height: dynamicHeight,
+    menubar: !isMobile, // Disable menubar on mobile for simplicity
     mobile: {
-      menubar: true,
-      plugins: "autosave lists autolink",
-      toolbar: "undo bold italic styles",
+      menubar: false,
+      plugins: "autolink lists autosave",
+      toolbar: "undo redo | bold italic | bullist numlist",
     },
     plugins: [
       "image",
@@ -34,8 +37,9 @@ export default function RTE({ name, control, label, defaultValue = "", height = 
       "help",
       "wordcount",
     ],
-    toolbar:
-      "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+    toolbar: !isMobile
+      ? "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help"
+      : "undo redo | bold italic | bullist numlist", // Simplified toolbar for mobile
     content_style:
       "body { font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6 }",
     skin: "oxide",
@@ -75,12 +79,10 @@ RTE.propTypes = {
   control: PropTypes.object.isRequired,
   label: PropTypes.string,
   defaultValue: PropTypes.string,
-  height: PropTypes.number,
 };
 
 RTE.defaultProps = {
   name: "content",
   defaultValue: "",
   label: null,
-  height: 500,
 };
