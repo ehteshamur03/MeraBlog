@@ -11,7 +11,6 @@ function PostCard({ $id, title, featuredImage }) {
       className="w-full sm:w-1/2 md:w-1/3 p-4 transition-transform transform hover:scale-105"
     >
       <div className="relative bg-gradient-to-r from-[#F0F0F0] to-[#A3A3A3] rounded-xl p-6 flex flex-col h-full shadow-xl transition-all duration-700 ease-in-out items-center justify-center hover:ring-4 hover:ring-[#F1C6C6] hover:ring-opacity-50">
-        
         {/* Background blur effect */}
         <div className="absolute inset-0 bg-white bg-opacity-40 backdrop-blur-lg rounded-xl"></div>
 
