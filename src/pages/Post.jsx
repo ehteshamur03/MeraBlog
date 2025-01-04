@@ -102,6 +102,7 @@ export default function Post() {
               src={appwriteService.getFilePreview(post.featuredImage)}
               alt={post.title}
               className="rounded-xl shadow-lg w-full object-cover"
+              loading="lazy"
             />
           )}
         </div>

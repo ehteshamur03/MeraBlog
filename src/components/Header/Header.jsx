@@ -31,12 +31,13 @@ function Header() {
 
                     {/* Hamburger Menu for Mobile */}
                     <button
+                        aria-label="Toggle Navigation Menu"
                         className="block md:hidden text-white focus:outline-none"
                         onClick={() => setIsMenuOpen((prev) => !prev)}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-8 w-8"
+                            className="h-8 w-8 transition-all duration-300"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -46,6 +47,9 @@ function Header() {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+                                className={`transition-transform duration-300 ease-in-out ${
+                                    isMenuOpen ? "rotate-45" : "rotate-0"
+                                }`}
                             />
                         </svg>
                     </button>

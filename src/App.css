@@ -1,9 +1,18 @@
+/* Enable smooth scrolling globally */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure smooth scrolling for the root element as well */
 #root {
   min-width: 100%;
   text-align: center;
   box-sizing: border-box;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Optimizes scrolling performance on iOS */
 }
 
+/* Logo hover effects */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -36,6 +45,7 @@
   }
 }
 
+/* Card styles */
 .card {
   padding: 2em;
   border-radius: 10px;
@@ -43,6 +53,7 @@
   background-color: #fff;
 }
 
+/* Link styles */
 .read-the-docs {
   color: #888;
   text-decoration: none;
@@ -51,4 +62,11 @@
 .read-the-docs:hover {
   color: #333;
   text-decoration: underline;
+}
+
+/* Optional: Reduce padding for smaller mobile devices */
+@media (max-width: 640px) {
+  .card {
+    padding: 1.5em;
+  }
 }
