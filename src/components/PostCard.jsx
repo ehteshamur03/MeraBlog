@@ -17,22 +17,12 @@ function PostCard({ $id, title, featuredImage }) {
 
         {/* Image section */}
         <div className="flex justify-center mb-4 relative z-10 w-full h-auto">
-          <picture>
-            <source
-              srcSet={`${appwriteService.getFilePreview(featuredImage, { width: 1280 })}`}
-              type="image/webp"
-            />
-            <source
-              srcSet={`${appwriteService.getFilePreview(featuredImage, { width: 1280 })}`}
-              type="image/jpeg"
-            />
-            <img
-              src={appwriteService.getFilePreview(featuredImage, { width: 1280 })}
-              alt={`Featured image for post: ${title}`}
-              loading="lazy"
-              className="rounded-xl object-cover w-full h-40 xs:h-48 sm:h-56 md:h-64 transition-transform duration-300 ease-in-out hover:scale-105"
-            />
-          </picture>
+          <img
+            src={appwriteService.getFilePreview(featuredImage)}
+            alt={title}
+            loading="lazy"
+            className="rounded-xl object-cover w-full h-40 xs:h-48 sm:h-56 md:h-64 transition-transform duration-300 ease-in-out hover:scale-105"
+          />
         </div>
 
         {/* Title section */}
